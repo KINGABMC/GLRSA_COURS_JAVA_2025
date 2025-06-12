@@ -10,7 +10,8 @@ class AuthService {
 
     public function login(string $email, string $password): User|null {
         $user = $this->userRepository->findByEmail($email);
-        if ($user && password_verify($password, $user->getPassword())) {
+        // Comparaison directe des mots de passe en clair
+        if ($user && $user->getPassword() === $password) {
             return $user;
         }
         return null;

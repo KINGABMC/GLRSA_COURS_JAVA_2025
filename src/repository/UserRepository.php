@@ -12,7 +12,7 @@ class UserRepository {
             $nom = $user->getNom();
             $prenom = $user->getPrenom();
             $email = $user->getEmail();
-            $password = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            $password = $user->getPassword(); // Mot de passe en clair
             $role = $user->getRole();
             $dateCreation = $user->getDateCreation()->format("Y-m-d H:i:s");
             
