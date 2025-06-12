@@ -25,6 +25,6 @@ class InscriptionService {
     }
 
     public function getStatistiques(): array {
-        return $this->inscriptionRepository->getStatistiques();
+        return $this->inscriptionRepository->getStatistiquesCompletes();
     }
 }
