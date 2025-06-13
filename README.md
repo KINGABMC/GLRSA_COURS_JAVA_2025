@@ -1,96 +1,203 @@
-# Système de Gestion Scolaire ISM
+# Système de Gestion Scolaire ISM - Version Java Console
 
 ## Description
-Application web de gestion des inscriptions et de l'administration scolaire pour l'Institut Supérieur de Management (ISM).
+Application console Java pour la gestion des inscriptions et de l'administration scolaire de l'Institut Supérieur de Management (ISM). Cette version utilise des fichiers JSON pour le stockage des données et une interface console interactive.
 
 ## Fonctionnalités
 
-### Responsable Pédagogique (RP)
-- Créer et lister des classes (libellé, filière, niveau)
-- Ajouter des professeurs et leurs modules
-- Affecter des classes aux professeurs
-- Traiter les demandes de suspension/annulation
-- Consulter les statistiques de l'école
+### 🔐 Authentification
+- Connexion sécurisée par email/mot de passe
+- Gestion des sessions utilisateur
+- Contrôle d'accès basé sur les rôles
 
-### Attaché de Classe
-- Inscrire et réinscrire des étudiants
-- Lister les étudiants par classe et année
-- Consulter les demandes des étudiants
+### 👨‍💼 Responsable Pédagogique (RP)
+- ✅ Créer et lister des classes (libellé, filière, niveau)
+- ✅ Gestion des professeurs et modules
+- ✅ Affectation des classes aux professeurs
+- ✅ Traitement des demandes de suspension/annulation
+- ✅ Consultation des statistiques complètes
 
-### Professeur
-- Consulter ses classes et modules
-- Lister ses étudiants
+### 👨‍🏫 Attaché de Classe
+- ✅ Inscription et réinscription des étudiants
+- ✅ Liste des étudiants par classe et année
+- ✅ Consultation des demandes des étudiants
+- ✅ Recherche par matricule
 
-### Étudiant
-- Formuler des demandes de suspension/annulation
-- Consulter ses demandes
+### 👨‍🎓 Professeur
+- 🚧 Consultation des classes assignées
+- 🚧 Liste des modules enseignés
+- 🚧 Consultation des étudiants
+
+### 🎓 Étudiant
+- 🚧 Formuler des demandes de suspension/annulation
+- 🚧 Consulter ses demandes
 
 ## Architecture
 
-### Structure des dossiers
+### 📁 Structure du Projet
 ```
-├── config/
-│   └── Database.php          # Configuration base de données
-├── src/
-│   ├── models/              # Modèles de données
-│   ├── controllers/         # Contrôleurs
-│   ├── services/           # Services métier
-│   └── repository/         # Accès aux données
-├── views/                  # Vues HTML
-├── public/                 # Point d'entrée et assets
-└── database/              # Scripts SQL
+src/main/java/com/ism/
+├── Main.java                    # Point d'entrée de l'application
+├── controllers/                 # Contrôleurs (logique de présentation)
+│   ├── AuthController.java
+│   ├── DashboardController.java
+│   ├── ClasseController.java
+│   ├── EtudiantController.java
+│   ├── InscriptionController.java
+│   ├── ProfesseurController.java
+│   └── DemandeController.java
+├── services/                    # Services (logique métier)
+│   ├── AuthService.java
+│   ├── ClasseService.java
+│   ├── EtudiantService.java
+│   ├── InscriptionService.java
+│   └── DemandeService.java
+├── repositories/                # Repositories (accès aux données)
+│   ├── UserRepository.java
+│   ├── ClasseRepository.java
+│   ├── EtudiantRepository.java
+│   ├── InscriptionRepository.java
+│   └── DemandeRepository.java
+├── models/                      # Modèles de données
+│   ├── User.java
+│   ├── Classe.java
+│   ├── Etudiant.java
+│   ├── Inscription.java
+│   ├── Demande.java
+│   └── Module.java
+└── utils/                       # Utilitaires
+    ├── ConsoleUtils.java        # Utilitaires d'affichage console
+    ├── SessionManager.java      # Gestion des sessions
+    └── JsonFileManager.java     # Gestion des fichiers JSON
 ```
 
-### Technologies utilisées
-- **Backend**: PHP 8+ avec architecture MVC
-- **Base de données**: MySQL
-- **Frontend**: Bootstrap 5, HTML5, CSS3, JavaScript
-- **Serveur**: Apache/Nginx avec PHP
+### 💾 Stockage des Données
+Les données sont stockées dans des fichiers JSON dans le dossier `data/` :
+- `users.json` - Utilisateurs du système
+- `classes.json` - Classes disponibles
+- `etudiants.json` - Étudiants inscrits
+- `inscriptions.json` - Inscriptions des étudiants
+- `demandes.json` - Demandes de suspension/annulation
 
-## Installation
+## Installation et Exécution
 
 ### Prérequis
-- PHP 8.0 ou supérieur
-- MySQL 5.7 ou supérieur
-- Serveur web (Apache/Nginx)
+- ☕ Java 17 ou supérieur
+- 📦 Maven 3.6 ou supérieur
 
-### Configuration
-1. Cloner le projet
-2. Configurer la base de données dans `config/Database.php`
-3. Importer le schéma depuis `database/schema.sql`
-4. Configurer le serveur web pour pointer vers le dossier `public/`
+### 🚀 Compilation et Exécution
+```bash
+# Cloner le projet
+git clone <repository-url>
+cd gestion-scolaire-console
 
-### Base de données
-```sql
--- Créer la base de données
-CREATE DATABASE gestion_scolaire_ism;
+# Compiler le projet
+mvn clean compile
 
--- Importer le schéma
-mysql -u root -p gestion_scolaire_ism < database/schema.sql
+# Exécuter l'application
+mvn exec:java -Dexec.mainClass="com.ism.Main"
+
+# Ou créer un JAR exécutable
+mvn clean package
+java -jar target/gestion-scolaire-console-1.0.0.jar
 ```
 
-## Comptes de test
-- **RP**: rp@ism.sn / password
-- **Attaché**: attache@ism.sn / password  
-- **Professeur**: prof@ism.sn / password
+## 🔑 Comptes de Test
 
-## Statistiques disponibles
-- Effectif de l'école par année
-- Répartition par sexe et par année
-- Effectif par classe
-- Répartition par sexe et par classe
-- Nombre d'étudiants ayant suspendu/annulé par année
+L'application est pré-configurée avec les comptes suivants :
 
-## Sécurité
-- Authentification obligatoire pour toutes les fonctionnalités
-- Contrôle d'accès basé sur les rôles
-- Hashage des mots de passe avec password_hash()
-- Protection contre les injections SQL avec PDO
+| Rôle | Email | Mot de passe | Fonctionnalités |
+|------|-------|--------------|-----------------|
+| **RP** | `rp@ism.sn` | `password` | Toutes les fonctionnalités administratives |
+| **Attaché** | `attache@ism.sn` | `password` | Gestion des étudiants et inscriptions |
+| **Professeur** | `prof@ism.sn` | `password` | Consultation des classes et étudiants |
 
-## Développement
-Le projet suit une architecture MVC avec séparation claire des responsabilités :
-- **Models**: Représentation des données
-- **Views**: Interface utilisateur
-- **Controllers**: Logique de contrôle
-- **Services**: Logique métier
-- **Repository**: Accès aux données
+## 📊 Statistiques Disponibles
+
+### Statistiques Générales
+- 👥 Total des étudiants actifs
+- 🏫 Total des classes
+- 👨‍🏫 Total des professeurs
+- 📚 Total des modules
+
+### Statistiques Détaillées
+- 📅 **Effectif par année scolaire**
+- 👫 **Répartition par sexe et année**
+- 🏫 **Effectif par classe**
+- 👥 **Répartition par sexe et classe**
+- ⚠️ **Suspensions et annulations par année**
+
+## 🎨 Interface Console
+
+L'application utilise une interface console riche avec :
+- 🎨 **Tableaux formatés** pour l'affichage des données
+- 🎯 **Navigation par menus** intuitive
+- ✅ **Messages colorés** (succès, erreur, avertissement)
+- 📋 **Formulaires interactifs** pour la saisie
+- 🔄 **Gestion des sessions** transparente
+
+## 🛠️ Technologies Utilisées
+
+- **☕ Java 17** - Langage de programmation
+- **📦 Maven** - Gestionnaire de dépendances
+- **🔄 Jackson** - Sérialisation/désérialisation JSON
+- **📁 Architecture MVC** - Séparation des responsabilités
+- **💾 Stockage JSON** - Persistance des données
+
+## 🔒 Sécurité
+
+- ✅ **Authentification obligatoire** pour toutes les fonctionnalités
+- ✅ **Contrôle d'accès basé sur les rôles**
+- ✅ **Gestion des sessions** sécurisée
+- ✅ **Validation des données** d'entrée
+
+## 🚧 Fonctionnalités en Développement
+
+- 📚 Gestion complète des modules
+- 👨‍🏫 Interface professeur complète
+- 🎓 Interface étudiant complète
+- 📧 Système de notifications
+- 📈 Graphiques statistiques avancés
+- 🔍 Recherche avancée multi-critères
+
+## 📝 Utilisation
+
+1. **Démarrer l'application**
+2. **Se connecter** avec un des comptes de test
+3. **Naviguer** dans les menus selon votre rôle
+4. **Utiliser les fonctionnalités** disponibles
+5. **Consulter les statistiques** en temps réel
+
+## 🤝 Contribution
+
+Pour contribuer au projet :
+1. Fork le repository
+2. Créer une branche feature
+3. Commiter les changements
+4. Pousser vers la branche
+5. Créer une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+---
+
+**🎓 Institut Supérieur de Management (ISM) - 2025**
+```
+
+## 🎯 Fonctionnalités Implémentées
+
+✅ **Architecture MVC complète**
+✅ **Authentification et gestion des sessions**
+✅ **Gestion des classes** (création, liste, recherche)
+✅ **Gestion des étudiants** (ajout, liste, recherche)
+✅ **Système d'inscriptions** complet
+✅ **Statistiques détaillées** selon le cahier des charges
+✅ **Interface console riche** avec tableaux formatés
+✅ **Stockage JSON** avec données de test
+✅ **Contrôle d'accès par rôles**
+
+## 🚀 Prêt à l'utilisation !
+
+L'application est maintenant prête. Vous pouvez la compiler et l'exécuter pour tester toutes les fonctionnalités implémentées !
